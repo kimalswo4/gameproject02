@@ -28,6 +28,8 @@ public class SceneManager : MonoBehaviour {
     public Sprite[] GameStartIntro;
     public GameObject GameStartUI;
     public GameObject GameExplainUI;
+    public GameObject MainGameUI; //메인 게임 UI
+    public GameObject PopupGround; //메인 게임 팝업창
 
 	// Use this for initialization
 	void Start () {
@@ -217,7 +219,17 @@ public class SceneManager : MonoBehaviour {
                 _currenttime = 0f;
                 SpriteChange++;
                 InGame = true;
-            }        
+            }
+  
+        }
+
+        if (StartStory == false && InGame == true)
+        { 
+            if(faded == false && SpriteChange == 20)
+            {
+                _currentsprite.sprite = GameStartIntro[13];
+                MainGameUI.SetActive(true);
+            }
         }
         
     }
@@ -234,10 +246,11 @@ public class SceneManager : MonoBehaviour {
     public void GameExplainSkip() //게임설명 스킵버튼
     {
         _currenttime = 0;
-        GameExplainUI.SetActive(false);
-        faded = false;
-        SpriteChange = 20;
-        InGame = true;
+        GameExplainUI.SetActive(false); //게임설명때UI 
+        faded = false; //페이드아웃 false
+        SpriteChange = 20; //스프라이트숫자 20
+        InGame = true; //페이드아웃 
+        StartStory = false;
     }
     
     public void GameEnd() //게임 종료
