@@ -71,9 +71,7 @@ public class SceneManager : MonoBehaviour {
         if (InGame == true && _currenttime >= _waittoal && faded == false && SpriteChange == 20)
         {
             _currenttime = 0f;
-            _currentsprite.sprite = GameStartIntro[12];               
-            
-                    
+            _currentsprite.sprite = GameStartIntro[12];                
         }
     }
 

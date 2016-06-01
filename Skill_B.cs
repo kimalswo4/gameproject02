@@ -1,15 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Skill_B : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+public class Skill_B : Skill {
+    public Skill_B() : base(3,6)
+    {
+        AddCommandProbability(3, 20);
+        AddCommandProbability(4, 40);
+        AddCommandProbability(5, 30);
+        AddCommandProbability(6, 10);
+        SetPercent();
+    }
 }
