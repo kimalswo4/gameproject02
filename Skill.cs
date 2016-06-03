@@ -44,7 +44,7 @@ public class Skill{
             {
                 CommandPercent[num + CheckPercent] = index + CommandRangeMin;
             }
-            CheckPercent = CommandRangeProbability[index];
+            CheckPercent += CommandRangeProbability[index];
         }
     }
 
@@ -52,10 +52,6 @@ public class Skill{
     {
         CurrentCommandNumber = CommandPercent[Random.Range(0, 100)]; //0~100퍼센트애들중 커맨드숫자를뽑음
         CommandNumber = new int[CurrentCommandNumber]; //CommandNumber 
-        /*for(int index = 0; index < 100; index++)
-        {
-            Debug.Log(CommandPercent[index]);
-        }*/
     }
 
     public void SetCommand()
@@ -71,10 +67,10 @@ public class Skill{
                     Command.Enqueue(KeyCode.DownArrow);
                     break;
                 case 2:
-                    Command.Enqueue(KeyCode.RightArrow);
+                    Command.Enqueue(KeyCode.LeftArrow);
                     break;
                 case 3:
-                    Command.Enqueue(KeyCode.LeftArrow);
+                    Command.Enqueue(KeyCode.RightArrow);
                     break;
 
             }
@@ -83,13 +79,18 @@ public class Skill{
 
     public KeyCode GetCommand()
     {
-        //KeyCode key = Command.Dequeue();
-        Debug.Log(Command.Dequeue());
-        return KeyCode.UpArrow;
+        return Command.Dequeue();
     }
 
-    public Queue<KeyCode> GetQueue()
+    public KeyCode[] GetCommandList()
     {
-        return Command;
+        KeyCode[] commandList = new KeyCode[Command.Count];
+        Command.CopyTo(commandList, 0); 
+        return commandList;
+    }
+
+    public int GetCommandLength()
+    {
+        return Command.Count;
     }
 }

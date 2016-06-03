@@ -4,8 +4,6 @@ using System.Collections;
 public enum SKILL_TYPE {None,A,B,C,D};
 
 public class SkillSystem : MonoBehaviour {
-    private float CurrentTime;
-    private float Timer;
 
     private Skill_A a_skil;
     private Skill_B b_skil;
@@ -46,7 +44,7 @@ public class SkillSystem : MonoBehaviour {
         }
         currentSkillType.SetCommandNumber();
         currentSkillType.SetCommand();
-        GameObject.Find("UIManager").GetComponent<UIManager>().SetCommandImage(currentSkillType.GetQueue());
+        GameObject.Find("UIManager").GetComponent<UIManager>().SetCommandImage(currentSkillType.GetCommandList());
     }
 
     public bool EqualCommand(KeyCode key)
@@ -60,5 +58,22 @@ public class SkillSystem : MonoBehaviour {
             return true;
         else 
             return false;
+    }
+
+    public void Sucsses()
+    {
+       
+    }
+    public void Fail()
+    {
+
+    }
+    public void SkillCoolTime() //스킬 쿨타임
+    {
+
+    }
+    public void Timer() //타이머 몇초동안입력하는가
+    {
+
     }
 }

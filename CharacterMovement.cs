@@ -7,7 +7,10 @@ public class CharacterMovement : PlayerState
     private Rigidbody2D _playerRigidBody2D;
     private bool _facingRight; //플레이어 바라보는 방향 판정
     private bool _grounded = false;
-
+    private float _attackCoolTime;
+    private float _activeFalse;
+    [SerializeField]
+    private GameObject AttackRange;
     
     public LayerMask Ground;
 
@@ -27,6 +30,7 @@ public class CharacterMovement : PlayerState
     {
         Move();
         CheckGround();
+        Attack();
     }
 
     void Move()
@@ -70,5 +74,13 @@ public class CharacterMovement : PlayerState
                 return;
         }
         _grounded = false;
+    }
+
+    void Attack()
+    {
+        if(Input.GetKeyDown(KeyCode.X))
+        {
+
+        }
     }
 }
