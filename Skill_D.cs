@@ -1,13 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Skill_D : Skill {
-    public Skill_D() : base(3,6)
+public class Skill_D : Skill
+{
+
+    public Skill_D()
     {
-        AddCommandProbability(3, 20);
-        AddCommandProbability(4, 40);
-        AddCommandProbability(5, 30);
-        AddCommandProbability(6, 10);
-        SetPercent();
+        minCommandNumber = 5;
+        maxCommandNumber = 8;
+        commandNumberProbability = new int[] { 10, 50, 30, 10 };
+    }
+
+    public override void Action()
+    {
+        Player.Instance.ActiveSkill(PlayerAttackType.Skill_D);
     }
 }

@@ -3,7 +3,8 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class SceneManager : MonoBehaviour {
+public class TutorialManager : Singleton<TutorialManager>
+{
 
     private SpriteRenderer _currentsprite;
     public SpriteRenderer FadeSprite;
@@ -28,11 +29,10 @@ public class SceneManager : MonoBehaviour {
     public Sprite[] GameStartIntro;
     public GameObject GameStartUI;
     public GameObject GameExplainUI;
-    public GameObject MainGameUI; //메인 게임 UI
-    public GameObject PopupGround; //메인 게임 팝업창
+
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 
         faded = false;
         StartStory = false;
@@ -43,17 +43,15 @@ public class SceneManager : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
+	public void TutorialUpdate ()
+    {
         FadeOut();
         ImageChange();
-        
-        
 	}
 
     void FadeOut() //페이드 인아웃 효과
     {
         float step = _speed * Time.deltaTime;
-
 
         if (faded)
         {
@@ -213,23 +211,10 @@ public class SceneManager : MonoBehaviour {
             }
             if (_currenttime >= _waittoal && faded == false && SpriteChange == 19)
             {
-                _currentsprite.sprite = GameStartIntro[12];
-                _currenttime = 0f;
-                SpriteChange++;
+                GameManager.Instance.NextScene("Lobby");
                 InGame = true;
             }
-  
         }
-
-        if (StartStory == false && InGame == true)
-        { 
-            if(faded == false && SpriteChange == 20)
-            {
-                _currentsprite.sprite = GameStartIntro[13];
-                MainGameUI.SetActive(true);
-            }
-        }
-        
     }
    
     public void GameStart() //GameStartMenu버튼
@@ -243,12 +228,7 @@ public class SceneManager : MonoBehaviour {
 
     public void GameExplainSkip() //게임설명 스킵버튼
     {
-        _currenttime = 0;
-        GameExplainUI.SetActive(false); //게임설명때UI 
-        faded = false; //페이드아웃 false
-        SpriteChange = 20; //스프라이트숫자 20
-        InGame = true; //페이드아웃 
-        StartStory = false;
+        GameManager.Instance.NextScene("Lobby");
     }
     
     public void GameEnd() //게임 종료

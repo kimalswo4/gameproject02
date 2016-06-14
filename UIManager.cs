@@ -1,53 +1,79 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
-using System.Collections.Generic;
+using System.Collections;
 
-public class UIManager : MonoBehaviour {
-    [SerializeField]
-    private Image[] commandImage;
-    [SerializeField]
-    private Sprite[] ArrowImages;
-    [SerializeField]
-    private Sprite[] SuccessImages;
-    [SerializeField]
-    private Sprite[] FailImages;
+public class UIManager : Singleton<UIManager> {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
+    [SerializeField]
+    private Text _gold;
+    [SerializeField]
+    private Text _postion;
+
+    [SerializeField]
+    private GameObject _commandBox;
+    [SerializeField]
+    private Animator _commandText;
+    [SerializeField]
+    private Image[] _arrowList;
+    [SerializeField]
+    private Sprite[] _arrowImageList;
+    [SerializeField]
+    private Sprite[] _arrowSuccessImageList;
+    [SerializeField]
+    private Sprite[] _arrowFailImageList;
+    [SerializeField]
+    private Sprite _blankImage;
+
+    private int[] _arrowValueList;
+
+    // Use this for initialization
+    void Start () {
+        _commandBox.SetActive(false);
+        _arrowValueList = new int[_arrowList.Length];
+    }
 	
 	// Update is called once per frame
 	void Update () {
 	
 	}
 
-    public void SetCommandImage(KeyCode[] command)
+    public void Initialize()
     {
-        int index = 0;
-        for (index = 0; index < command.Length; index++) //커맨드 이미지 채우기
+        _commandBox.SetActive(false);
+        System.Array.Clear(_arrowValueList, 0, _arrowValueList.Length); // 값 배열 초기화
+
+    }
+    public void SetSkillCommand(int[] list)
+    {
+        _commandBox.SetActive(true);
+        _arrowValueList = list;
+
+        for (int index = 0; index < _arrowList.Length; index++)
         {
-            switch (command[index])
+            if (index < list.Length)
             {
-                case KeyCode.UpArrow:
-                    commandImage[index].sprite = ArrowImages[0];
-                    break;
-                case KeyCode.DownArrow:
-                    commandImage[index].sprite = ArrowImages[1];
-                    break;
-                case KeyCode.LeftArrow:
-                    commandImage[index].sprite = ArrowImages[2];
-                    break;
-                case KeyCode.RightArrow:
-                    commandImage[index].sprite = ArrowImages[3];
-                    break;
+                _arrowList[index].sprite = _arrowImageList[list[index]];
             }
+            else
+                _arrowList[index].sprite = _blankImage;
         }
-        while(index < commandImage.Length) //커맨드 이미지 남은거 빼는거
-        {
-            commandImage[index].sprite = ArrowImages[4];
-            index++;
-        }
+    }
+    public void SetInputResult(int index, CommandResult result)
+    {
+        if (result == CommandResult.Success)
+            _arrowList[index].sprite = _arrowSuccessImageList[_arrowValueList[index]];
+        else if (result == CommandResult.Fail)
+            _arrowList[index].sprite = _arrowFailImageList[_arrowValueList[index]];
+    }
+
+    public void SetResultText(string text)
+    {
+        _commandText.SetTrigger(text);
+    }
+    public void SetPostion(int postion)
+    {
+        if (_postion == null)
+            _postion = GameObject.Find("Potion_Button").transform.FindChild("Text").GetComponent<Text>();
+        _postion.text = postion.ToString();
     }
 }
